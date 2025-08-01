@@ -1,0 +1,16 @@
+/mvnw text eol=lf
+*.cmd text eol=crlf
+
+# Compiled Java files
+*.class
+/target/
+
+# Log files
+*.log
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+.env
