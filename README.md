@@ -20,7 +20,7 @@
 - ✅ RESTful endpoints for registration, login, and chat
 - 🔐 JWT-based authentication
 - 💬 Chat endpoint integrated with OpenAI
-- 📚 Retrieval-Augmented Generation (RAG) with local knowledge base
+- 📚 Retrieval-Augmented Generation (RAG) with remote knowledge base
 - 🧪 Full test suite with controller + service layer mocks
 - 🐳 Dockerized & ready for Azure deployment
 - 🔁 CI/CD pipeline via `azure-pipelines.yml`
@@ -55,15 +55,23 @@
 
 ## 📚 Knowledge Base (RAG)
 
-The chatbot enriches prompts by dynamically retrieving relevant documents from a local JSON-based knowledge base, simulating Retrieval-Augmented Generation (RAG) logic.
+The chatbot enriches prompts by dynamically retrieving relevant entries from a remote text-based knowledge base.  
+This file is fetched from a URL defined in the `application.properties` file:
 
-```json
-{
-  "id": "faq_001",
-  "question": "How often should I deworm my puppy?",
-  "answer": "Puppies should be dewormed every 2 weeks until 12 weeks old."
-}
+```properties
+knowledge.base.url=https://gist.githubusercontent.com/...
 ```
+
+Each line in the file is formatted using a `::` separator:
+
+```text
+how often should i deworm my puppy::Puppies should be dewormed every 2 weeks until 12 weeks old.
+can my dog eat chocolate::No, chocolate is toxic to dogs and can be very harmful.
+```
+
+At startup, the system loads this file, parses it into a key-value map, and uses it to enrich prompts during conversations.
+
+> 🔄 This simulates a basic Retrieval-Augmented Generation (RAG) strategy using plain text instead of embeddings.
 
 ---
 
