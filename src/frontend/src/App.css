@@ -1,0 +1,68 @@
+/* General styles */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  background-color: #343541;
+  color: #ECECEC;
+}
+
+#root {
+  width: 100%;
+}
+
+/* --- UNIFIED PAGE CONTAINER --- */
+/* This single class centers BOTH the login form and the chat window. */
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* --- STYLES FOR LOGIN FORM --- */
+.auth-form {
+  background-color: #40414F;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.auth-form h2 { margin: 0 0 10px 0; text-align: center; }
+.auth-form input { background-color: #565869; border: none; border-radius: 8px; padding: 12px 15px; color: #ECECEC; font-size: 1rem; }
+.auth-form button { background-color: #2A85FF; color: white; border: none; border-radius: 8px; padding: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
+.auth-form .error-message { color: #ff5c5c; text-align: center; margin: 0; }
+.auth-form .form-link { text-align: center; font-size: 0.9rem; color: #c5c5d2; }
+.auth-form .form-link a { color: #2A85FF; text-decoration: none; }
+.auth-form .form-link a:hover { text-decoration: underline; }
+
+/* --- STYLES FOR CHAT WINDOW --- */
+.chat-window {
+  width: 100%;
+  max-width: 800px;
+  height: 90vh;
+  background-color: #40414F;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.chat-header { display: flex; align-items: center; padding: 10px 20px; background-color: #444654; border-bottom: 1px solid #343541; }
+.chat-header img { height: 40px; width: 40px; margin-right: 15px; border-radius: 50%; }
+.chat-header h1 { font-size: 1.2rem; margin: 0; font-weight: 600; }
+.messages-area { flex-grow: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; }
+.message { padding: 12px 20px; border-radius: 18px; margin-bottom: 12px; max-width: 75%; line-height: 1.5; word-wrap: break-word; }
+.message p { margin: 0; }
+.message.bot { background-color: #444654; align-self: flex-start; }
+.message.user { background-color: #2A85FF; color: white; align-self: flex-end; }
+.input-area { padding: 20px; border-top: 1px solid #565869; display: flex; gap: 10px; }
+.input-area input { flex-grow: 1; background-color: #565869; border: none; border-radius: 8px; padding: 12px 15px; color: #ECECEC; font-size: 1rem; }
+.input-area input:focus { outline: none; box-shadow: 0 0 0 2px #2A85FF; }
+.input-area button { background-color: #2A85FF; color: white; border: none; border-radius: 8px; padding: 0 20px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
+.input-area button:hover { background-color: #1A75E8; }

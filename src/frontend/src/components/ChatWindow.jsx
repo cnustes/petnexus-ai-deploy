@@ -1,0 +1,75 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const API_URL = "http://localhost:8080/api/chat";
+
+function ChatWindow() {
+  const [messages, setMessages] = useState([
+    { sender: 'bot', text: 'Welcome to PetNexus AI! How can I assist you?' }
+  ]);
+  const [input, setInput] = useState('');
+
+  const handleSend = async () => {
+    if (input.trim() === '') return;
+
+    // --- CHANGE IS HERE ---
+    // Get the token from localStorage
+    const token = localStorage.getItem('jwt_token');
+
+    // Check if the token exists
+    if (!token) {
+      setMessages(prev => [...prev, { sender: 'bot', text: 'Authentication error. Please log in again.' }]);
+      return;
+    }
+    // --------------------
+
+    const userMessage = { sender: 'user', text: input };
+    setMessages(prevMessages => [...prevMessages, userMessage]);
+
+    const messageToSend = input;
+    setInput('');
+
+    try {
+      const headers = { 'Authorization': `Bearer ${token}` }; // Use the token from storage
+      const response = await axios.post(API_URL, { message: messageToSend }, { headers });
+      const botResponse = { sender: 'bot', text: response.data.reply };
+      setMessages(prevMessages => [...prevMessages, botResponse]);
+    } catch (error) {
+      console.error("Error calling the API:", error);
+      const errorResponse = { sender: 'bot', text: 'Sorry, I am having trouble connecting to the server.' };
+      setMessages(prevMessages => [...prevMessages, errorResponse]);
+    }
+  };
+
+  return (
+    <div className="chat-window">
+      {/* --- NEW HEADER SECTION --- */}
+      <div className="chat-header">
+        <img src="/logo.png" alt="PetNexus AI Logo" />
+        <h1>PetNexus AI</h1>
+      </div>
+      {/* ------------------------- */}
+
+      <div className="messages-area">
+        {messages.map((message, index) => (
+          <div key={index} className={`message ${message.sender}`}>
+            <p>{message.text}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="input-area">
+        <input
+          type="text"
+          placeholder="Ask something..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+        />
+        <button onClick={handleSend}>Send</button>
+      </div>
+    </div>
+  );
+}
+
+export default ChatWindow;
