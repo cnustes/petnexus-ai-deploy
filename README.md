@@ -1,9 +1,8 @@
+# PetNexus AI 🐾
 
-# 🐾 PetNexus AI — Intelligent Chatbot for Pet Healthcare
+![PetNexus AI Logo](./src/frontend/public/logo.png)
 
-**PetNexus AI** is an intelligent chatbot service designed to assist pet owners with healthcare-related inquiries. It allows authenticated users to chat with a polite, AI-driven assistant that provides contextual information about veterinary appointments, procedures, and health tips.
-
-> 🧠 Built as part of the **AI-Powered Chatbot Order Status Challenge**.
+**PetNexus AI** is an intelligent chat assistant designed to answer questions about pet care and health. The application features a secure authentication system and an interactive chat interface that connects with advanced language models like OpenAI and Gemini.
 
 ---
 
@@ -15,146 +14,109 @@
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
-- ✅ RESTful endpoints for registration, login, and chat
-- 🔐 JWT-based authentication
-- 💬 Chat endpoint integrated with OpenAI
-- 📚 Retrieval-Augmented Generation (RAG) with remote knowledge base
-- 🧪 Full test suite with controller + service layer mocks
-- 🐳 Dockerized & ready for Azure deployment
-- 🔁 CI/CD pipeline via `azure-pipelines.yml`
-
----
-
-## 📦 Tech Stack
-
-| Layer          | Tech                          |
-|----------------|-------------------------------|
-| Backend        | Java 17 + Spring Boot         |
-| Database       | PostgreSQL (can switch to H2) |
-| AI Integration | OpenAI API (GPT models)       |
-| Security       | Spring Security + JWT         |
-| Testing        | JUnit 5 + MockMvc             |
-| DevOps         | Docker + Azure Pipelines      |
+- **🔐 User Authentication:** Complete registration and login system with JWT security tokens.
+- **💬 Modern Chat Interface:** A Single-Page Application (SPA) built with React, featuring a dark and intuitive design.
+- **🤖 Dual AI Integration:** Connects to the OpenAI API as the primary provider and automatically uses the Gemini API as a fallback on failure.
+- **🧠 Context-Aware Responses (RAG):** The bot uses a knowledge base to provide context to the AI models, generating more accurate and relevant answers.
+- **🔒 Protected Routes:** The chat interface is only accessible to logged-in users.
+- **🐳 Dockerized Environment:** The entire application (Java backend + PostgreSQL database) is orchestrated with Docker Compose for easy local setup.
+- **🔄 CI/CD with Azure DevOps:** Includes a Continuous Integration pipeline configured in Azure DevOps to run tests automatically.
 
 ---
 
-## 🧪 API Endpoints
+## 🛠️ Tech Stack
 
-### Auth
+### Backend
+- **Java 21**
+- **Spring Boot 3**
+- **Spring Security** (for JWT handling)
+- **Spring Data JPA**
+- **PostgreSQL**
+- **Maven** (for dependency management)
+- **Lombok**
 
-- `POST /auth/register` — User registration
-- `POST /auth/login` — Login and receive JWT
+### Frontend
+- **React.js**
+- **Vite** (as the build tool)
+- **React Router** (for navigation)
+- **Axios** (for API calls)
+- **CSS3** (for custom styling)
 
-### Chat
-
-- `POST /chat` — Submit a message and receive AI-generated response (JWT required)
-
----
-
-## 📚 Knowledge Base (RAG)
-
-The chatbot enriches prompts by dynamically retrieving relevant entries from a remote text-based knowledge base.  
-This file is fetched from a URL defined in the `application.properties` file:
-
-```properties
-knowledge.base.url=https://gist.githubusercontent.com/...
-```
-
-Each line in the file is formatted using a `::` separator:
-
-```text
-how often should i deworm my puppy::Puppies should be dewormed every 2 weeks until 12 weeks old.
-can my dog eat chocolate::No, chocolate is toxic to dogs and can be very harmful.
-```
-
-At startup, the system loads this file, parses it into a key-value map, and uses it to enrich prompts during conversations.
-
-> 🔄 This simulates a basic Retrieval-Augmented Generation (RAG) strategy using plain text instead of embeddings.
+### DevOps
+- **Docker & Docker Compose**
+- **Azure DevOps Pipelines** (CI)
 
 ---
 
-## 🛠️ Getting Started
+## 🚀 Getting Started
+
+Follow these steps to get the project running in your local environment.
 
 ### Prerequisites
 
-- Java 17+
-- Apache Maven
-- PostgreSQL
-- OpenAI API key
-- JWT secret
+- **Java 21** (or higher)
+- **Maven 3.8** (or higher)
+- **Node.js 20.x** (or higher)
+- **Docker** and **Docker Compose**
 
-### Running Locally
+### Local Installation & Setup
 
-```bash
-# Clone the repo
-git clone https://your-repo-url.git
-cd PetNexusAI
+1.  **Clone the repository:**
+    ```bash
+    git clone <YOUR_REPOSITORY_URL>
+    cd PetNexus-AI
+    ```
 
-# Set env variables or edit application.properties
-export OPENAI_API_KEY=your-key
-export JWT_SECRET=your-secret
+2.  **Configure Environment Variables:**
+    * In the project root, create a file named `.env`.
+    * Copy the content from the example below and fill in your own keys.
 
-# Run the app
-mvn spring-boot:run
+3.  **Launch the Containers:**
+    This command will build the Java application's image and launch both the app server and the database.
+    ```bash
+    docker-compose up --build
+    ```
+    The backend will be running at `http://localhost:8080`.
+
+4.  **Install Frontend Dependencies:**
+    * Open a **new terminal** and navigate to the frontend folder.
+    ```bash
+    cd frontend
+    npm install
+    ```
+
+5.  **Run the Frontend:**
+    ```bash
+    npm run dev
+    ```
+    The web interface will be available at `http://localhost:5173`.
+
+---
+
+## ⚙️ Configuration (.env)
+
+Create a `.env` file in the project root with the following content, replacing the placeholder values with your credentials:
+
+```env
+# PostgreSQL Credentials
+POSTGRES_DB=petnexusdb
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=your_strong_password
+
+# JWT Secret Key
+JWT_SECRET=your_super_secret_jwt_key_that_is_long_and_secure
+
+# AI Provider API Keys
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+GEMINI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 ---
 
-## 🧪 Running Tests
+## 📋 API Endpoints
 
-```bash
-mvn test
-```
-
-Includes:
-- Auth flow tests
-- Chat controller and fallback logic
-- Negative and unauthorized scenarios
-
----
-
-## 🐳 Docker
-
-```bash
-docker build -t petnexus-ai .
-docker run -p 8080:8080 petnexus-ai
-```
-
-Also includes `docker-compose.yml` for local DB setup.
-
----
-
-## ☁️ Deployment on Azure
-
-1. Push Docker image to Azure Container Registry
-2. Create App Service to host container
-3. Configure environment variables (API key, DB)
-4. Use `azure-pipelines.yml` for automatic CI/CD
-
----
-
-## ✅ Challenge Checklist
-
-| Requirement                         | Status |
-|-------------------------------------|--------|
-| User Stories                        | ✅ Done (`user-stories.md`) |
-| Auth endpoints + JWT                | ✅ Done |
-| Chat API with OpenAI integration    | ✅ Done |
-| Knowledge base retrieval (RAG)      | ✅ Done |
-| Unit + Integration Tests            | ✅ Done |
-| CI/CD via Azure Pipelines           | ✅ Done |
-| Cloud deployment (Docker)           | ✅ Ready |
-| Bonus: Frontend integration         | 🟡 In Progress |
-| Bonus: Observability & Metrics      | ⬜ Not included |
-
----
-
-## 📄 License
-
-MIT License
-
----
-
-Made with 💙 by Camilo Ñustes for the AI Workshop.
+- `POST /api/users/register`: Registers a new user.
+- `POST /api/users/login`: Logs in a user and returns a JWT.
+- `POST /api/chat`: (Protected) Sends a message to the chat and receives a response from the AI.
