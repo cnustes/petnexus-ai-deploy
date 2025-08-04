@@ -34,11 +34,26 @@ body {
 }
 .auth-form h2 { margin: 0 0 10px 0; text-align: center; }
 .auth-form input { background-color: #565869; border: none; border-radius: 8px; padding: 12px 15px; color: #ECECEC; font-size: 1rem; }
-.auth-form button { background-color: #2A85FF; color: white; border: none; border-radius: 8px; padding: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
 .auth-form .error-message { color: #ff5c5c; text-align: center; margin: 0; }
 .auth-form .form-link { text-align: center; font-size: 0.9rem; color: #c5c5d2; }
 .auth-form .form-link a { color: #2A85FF; text-decoration: none; }
 .auth-form .form-link a:hover { text-decoration: underline; }
+
+.auth-form button {
+  background-color: #2A85FF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 45px; /* To prevent the button from changing size */
+}
 
 /* Chat Window Styles */
 .chat-window {
