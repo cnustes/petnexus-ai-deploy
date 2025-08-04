@@ -1,0 +1,33 @@
+# This pipeline is triggered on pushes to the main branch.
+trigger:
+  - main
+
+# Use a Microsoft-hosted agent running Ubuntu to execute the job.
+pool:
+  vmImage: 'ubuntu-latest'
+
+# Define the sequence of steps for the CI process.
+steps:
+  # Step 1: Install the correct version of Java (JDK 21 in our case).
+  - task: JavaToolInstaller@0
+    inputs:
+      versionSpec: '21'
+      jdkArchitectureOption: 'x64'
+      jdkSourceOption: 'PreInstalled'
+    displayName: 'Install JDK 21'
+
+  # Step 2: Run the Maven tests.
+  # This task executes the 'test' goal, which runs all unit and integration tests.
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'test'
+      options: '-Dmaven.wagon.http.retryHandler.count=3' # Optional: Adds retry for downloading dependencies.
+      publishJUnitTestResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      javaHomeOption: 'JDKVersion'
+      mavenVersionOption: 'Default'
+      mavenAuthenticateFeed: false
+      effectivePomSkip: false
+      sonarQubeRunAnalysis: false
+    displayName: 'Run Maven Tests'

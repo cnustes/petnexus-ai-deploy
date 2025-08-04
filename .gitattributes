@@ -13,4 +13,4 @@
 *.iml
 .vscode/
 
-.env
+* text=auto eol=lf
