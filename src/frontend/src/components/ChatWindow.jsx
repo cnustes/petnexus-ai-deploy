@@ -42,34 +42,27 @@ function ChatWindow() {
   };
 
   return (
-    <div className="chat-window">
-      {/* --- NEW HEADER SECTION --- */}
-      <div className="chat-header">
-        <img src="/logo.png" alt="PetNexus AI Logo" />
-        <h1>PetNexus AI</h1>
-      </div>
-      {/* ------------------------- */}
+      <div className="chat-window">
+        <div className="chat-header">
+          {/* ... (código del header) ... */}
+        </div>
 
-      <div className="messages-area">
-        {messages.map((message, index) => (
-          <div key={index} className={`message ${message.sender}`}>
-            <p>{message.text}</p>
-          </div>
-        ))}
-      </div>
+        <div className="messages-area">
+          {messages.map((message, index) => (
+            <div key={index} className={`message ${message.sender}`}>
+              {/* --- 2. CHANGE IS HERE --- */}
+              {/* Replace <p> with <ReactMarkdown> */}
+              <ReactMarkdown>{message.text}</ReactMarkdown>
+              {/* ------------------------- */}
+            </div>
+          ))}
+        </div>
 
-      <div className="input-area">
-        <input
-          type="text"
-          placeholder="Ask something..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-        />
-        <button onClick={handleSend}>Send</button>
+        <div className="input-area">
+          {/* ... (código del input y botón) ... */}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
-export default ChatWindow;
+  export default ChatWindow;

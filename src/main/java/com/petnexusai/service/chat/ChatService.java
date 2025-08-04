@@ -94,13 +94,31 @@ public class ChatService {
         return null;
     }
 
+    /**
+     * Builds the final prompt to be sent to the AI, combining a system message,
+     * context, and the user's question.
+     * @param context The context found in the knowledge base (can be null).
+     * @param question The original question from the user.
+     * @return A formatted prompt string.
+     */
     private String buildPromptWithContext(String context, String question) {
+        // This is our new, more powerful system prompt.
+        String systemPrompt = "You are PetNexus AI, a friendly and helpful AI assistant specializing in pet care. " +
+                "Your primary goal is to answer user questions about the health, nutrition, and general well-being of pets. " +
+                "If a user asks a question that is not related to pets or animal care, you must politely decline to answer " +
+                "and state that your purpose is to help with pet-related topics. Do not answer off-topic questions. " +
+                "Use Markdown for formatting, for example **bold** for important terms.";
+
         if (context == null) {
-            log.warn("No context found. Sending original question to AI.");
-            return question;
+            log.warn("No context found. Sending original question to AI with system prompt.");
+            // If there's no context from our knowledge base, we still send the system prompt.
+            return String.format("%s\n\nQuestion:\n\"%s\"", systemPrompt, question);
         }
+
+        // When we have context, we combine all three parts.
         return String.format(
-                "Please answer the following question based on the provided context.\n\nContext:\n\"%s\"\n\nQuestion:\n\"%s\"",
+                "%s\n\nUse the following context to answer the question.\n\nContext:\n\"%s\"\n\nQuestion:\n\"%s\"",
+                systemPrompt,
                 context,
                 question
         );
