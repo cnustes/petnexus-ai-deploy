@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
 
 const API_URL = `${import.meta.env.VITE_API_URL}/api/chat`;
 
@@ -13,16 +13,11 @@ function ChatWindow() {
   const handleSend = async () => {
     if (input.trim() === '') return;
 
-    // --- CHANGE IS HERE ---
-    // Get the token from localStorage
     const token = localStorage.getItem('jwt_token');
-
-    // Check if the token exists
     if (!token) {
       setMessages(prev => [...prev, { sender: 'bot', text: 'Authentication error. Please log in again.' }]);
       return;
     }
-    // --------------------
 
     const userMessage = { sender: 'user', text: input };
     setMessages(prevMessages => [...prevMessages, userMessage]);
@@ -31,7 +26,7 @@ function ChatWindow() {
     setInput('');
 
     try {
-      const headers = { 'Authorization': `Bearer ${token}` }; // Use the token from storage
+      const headers = { 'Authorization': `Bearer ${token}` };
       const response = await axios.post(API_URL, { message: messageToSend }, { headers });
       const botResponse = { sender: 'bot', text: response.data.reply };
       setMessages(prevMessages => [...prevMessages, botResponse]);
@@ -43,27 +38,32 @@ function ChatWindow() {
   };
 
   return (
-      <div className="chat-window">
-        <div className="chat-header">
-          {/* ... (código del header) ... */}
-        </div>
-
-        <div className="messages-area">
-          {messages.map((message, index) => (
-            <div key={index} className={`message ${message.sender}`}>
-              {/* --- 2. CHANGE IS HERE --- */}
-              {/* Replace <p> with <ReactMarkdown> */}
-              <ReactMarkdown>{message.text}</ReactMarkdown>
-              {/* ------------------------- */}
-            </div>
-          ))}
-        </div>
-
-        <div className="input-area">
-          {/* ... (código del input y botón) ... */}
-        </div>
+    <div className="chat-window">
+      <div className="chat-header">
+        <img src="/logo.png" alt="PetNexus AI Logo" />
+        <h1>PetNexus AI</h1>
       </div>
-    );
-  }
 
-  export default ChatWindow;
+      <div className="messages-area">
+        {messages.map((message, index) => (
+          <div key={index} className={`message ${message.sender}`}>
+            <ReactMarkdown>{message.text}</ReactMarkdown>
+          </div>
+        ))}
+      </div>
+
+      <div className="input-area">
+        <input
+          type="text"
+          placeholder="Ask something..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+        />
+        <button onClick={handleSend}>Send</button>
+      </div>
+    </div>
+  );
+}
+
+export default ChatWindow;
