@@ -1,12 +1,73 @@
-# React + Vite
+# PetNexus AI - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This directory contains the source code for the PetNexus AI user interface, a Single-Page Application (SPA) built with React.
 
-Currently, two official plugins are available:
+This application provides views for user registration, login, and a real-time chat interface that communicates with the Spring Boot backend API.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Framework:** [React.js](https://reactjs.org/)
+- **Build Tool:** [Vite](https://vitejs.dev/)
+- **Routing:** [React Router](https://reactrouter.com/)
+- **HTTP Client:** [Axios](https://axios-http.com/)
+- **Styling:** Plain CSS3
+
+---
+
+## Getting Started
+
+Follow these instructions to get the frontend running locally for development.
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (version 20.x or higher)
+
+### Installation & Setup
+
+1.  **Navigate to the frontend directory:**
+    From the root of the monorepo, run:
+    ```bash
+    cd frontend
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Set up environment variables:**
+    * Create a new file in the `frontend` directory named `.env`.
+    * Add the following line to the file. This points the frontend to your local backend server.
+    ```env
+    VITE_API_URL=http://localhost:8080
+    ```
+
+---
+
+## Available Scripts
+
+In the `frontend` directory, you can run the following commands:
+
+### `npm run dev`
+
+Runs the app in development mode. Open [http://localhost:5173](http://localhost:5173) to view it in your browser. The page will reload when you make changes.
+
+### `npm run build`
+
+Builds the app for production to the `dist` folder. It correctly bundles React in production mode and optimizes the build for the best performance.
+
+### `npm run preview`
+
+Runs a local server to preview the production build from the `dist` folder.
+
+---
+
+## Project Structure
+
+-   **`/public`**: Contains static assets like the `logo.png` and `favicon.png`.
+-   **`/src/components`**: Contains reusable React components (`ChatWindow`, `ProtectedRoute`).
+-   **`/src/pages`**: Contains top-level components that represent a full page (`LoginPage`, `ChatPage`, `RegisterPage`).
+-   **`/src/App.jsx`**: The main application component that handles routing.
+-   **`/src/main.jsx`**: The entry point of the React application.

@@ -16,7 +16,7 @@ function RegisterPage() {
       // --- CHANGES ARE HERE ---
 
       // 1. Capture the response from the API call
-      const response = await axios.post('http://localhost:8080/api/users/register', { name, email, password });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/register`, { name, email, password });
 
       // 2. Get the token from the response
       const token = response.data.token;

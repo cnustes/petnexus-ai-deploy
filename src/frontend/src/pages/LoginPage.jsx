@@ -13,7 +13,7 @@ function LoginPage() {
     e.preventDefault();
     setError('');
     try {
-      const response = await axios.post('http://localhost:8080/api/users/login', { email, password });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/login`, { email, password });
       localStorage.setItem('jwt_token', response.data.token);
       navigate('/chat');
     } catch (err) {
