@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
+const API_BASE_URL = 'http://localhost:8080'//import.meta.env.VITE_API_URL;
+
 function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -16,7 +18,7 @@ function RegisterPage() {
       // --- CHANGES ARE HERE ---
 
       // 1. Capture the response from the API call
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/register`, { name, email, password });
+      const response = await axios.post(`${API_BASE_URL}/api/users/register`, { name, email, password });
 
       // 2. Get the token from the response
       const token = response.data.token;

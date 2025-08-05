@@ -3,7 +3,9 @@ import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 import { ClipLoader } from 'react-spinners';
 
-const API_URL = `${import.meta.env.VITE_API_URL}/api/chat`;
+const API_BASE_URL = 'http://localhost:8080'//import.meta.env.VITE_API_URL;
+
+const API_URL = `${API_BASE_URL}/api/chat`;
 
 function ChatWindow() {
   const [messages, setMessages] = useState([

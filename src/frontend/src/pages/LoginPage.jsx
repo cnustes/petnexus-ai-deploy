@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners'; // <-- 1. Import the spinner
 
+const API_BASE_URL = 'http://localhost:8080'//import.meta.env.VITE_API_URL;
+
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,13 +18,13 @@ function LoginPage() {
     setIsLoading(true); // <-- 3. Set loading to true when the process starts
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/login`, {
+      const response = await axios.post(`${API_BASE_URL}/api/users/login`, {
         email,
         password
       });
 
       localStorage.setItem('jwt_token', response.data.token);
-      navigate('/chat');
+      navigate('/pets');
 
     } catch (err) {
       console.error("Login failed:", err);

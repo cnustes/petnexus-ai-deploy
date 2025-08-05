@@ -1,28 +1,33 @@
-// src/App.jsx
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import ChatPage from './pages/ChatPage';
 import RegisterPage from './pages/RegisterPage';
-import ProtectedRoute from './components/ProtectedRoute'; // <-- 1. Import the guardian
+import PetsPage from './pages/PetsPage';
+import ProtectedRoute from './components/ProtectedRoute';
+import MainLayout from './components/MainLayout'; // <-- Import the layout
 
 function App() {
   return (
     <Routes>
       {/* Public routes */}
-      <Route path="/" element={<LoginPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
 
-      {/* Protected route */}
+      {/* Protected routes will now render inside the MainLayout */}
       <Route
-        path="/chat"
+        path="/"
         element={
-          <ProtectedRoute> {/* <-- 2. Wrap the page with the guardian */}
-            <ChatPage />
+          <ProtectedRoute>
+            <MainLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route path="pets" element={<PetsPage />} />
+        <Route path="chat" element={<ChatPage />} />
+        {/* The default protected route will redirect to /pets */}
+        <Route index element={<PetsPage />} />
+      </Route>
     </Routes>
   );
 }
